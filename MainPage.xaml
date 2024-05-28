@@ -1,0 +1,35 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Listas.ViewModels"
+             x:Class="Listas.MainPage"
+             Title="Contacts">
+
+    <ContentPage.BindingContext>
+        <local:ContactsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh" Command="{Binding RefreshCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout Padding="10">
+        <ListView x:Name="ContactsListView" ItemsSource="{Binding Contacts}" HasUnevenRows="true" SeparatorVisibility="Default">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame Padding="10" Margin="5" HasShadow="True" CornerRadius="5">
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Image Source="{Binding ProfilePictureUrl}" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" />
+                                <StackLayout Orientation="Vertical" VerticalOptions="Center" Spacing="5">
+                                    <Label Text="{Binding Name}" FontSize="Medium" />
+                                    <Label Text="{Binding Message}" FontSize="Small" TextColor="Gray" />
+                                </StackLayout>
+                                <Button Text="Delete" Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference ContactsListView}}" CommandParameter="{Binding .}" VerticalOptions="Center" />
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
